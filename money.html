@@ -14,8 +14,18 @@
 	<script type="text/javascript">
 		//定义一个函数，完成存款计算
 		function calc(){
+			//一开始处做表单验证，看输入的是不是数字
+			
 			//1. 获取存款金额（读取文本框里用户输入的金额）
 			var cunkuanjine = document.getElementById("amount").value;
+			//定义一个正则表达式（规则表达式），假设我们要求存款金额是6位数字,最少两位数
+			var regExp = /^[0-9]{2,6}$/;
+			if (!regExp.test(cunkuanjine)) {
+				//能到此处说明用户输入不合法
+				document.getElementById("amount").value="输入不合法！必须是2-6位数字";
+				document.getElementById("amount").style="color:red";
+				return;//阻止程序继续向下执行
+			}
 			//上面取到的值是："8000"，不是数字，把"8000"->8000，才是数字
 			var cunkuannum=parseInt(cunkuanjine);//字符串转成整数
 			//2. 开始计算
@@ -27,6 +37,11 @@
 			//3. 把计算结果写入相应的文本框中，用户就能看到
 			document.getElementById("lixi").value=lixi;
 			document.getElementById("total").value=total;
+		}
+		function clearContent(){
+			//清空文本框
+			document.getElementById("amount").value='';
+			document.getElementById("amount").style="color:black";
 		}
 	</script>
 	</head>
@@ -40,7 +55,7 @@
 				<tr>
 					<td>存款金额</td>
 					<td>
-						<input class="form-control" type="text" name="amount" id="amount" placeholder="请输入存款金额" />
+						<input onfocus="clearContent()" class="form-control" type="text" name="amount" id="amount" placeholder="请输入存款金额" />
 					</td>
 				</tr>
 				<tr>
@@ -73,6 +88,6 @@
 				</tr>
 			</table>
 			开发者：2013040909  薛伟宏
-		</div
+		</div>
 	</body>
 </html>
